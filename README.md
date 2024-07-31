@@ -8,8 +8,9 @@ stateful set to actually run the database if it's helm-managed.
 
 # Kubernetes environment
 An internet gateway with NAT connects to following private networks:
-    - kube-api
-    - worker
+- kube-api
+- worker
+
 There is one public network `service` for services to be exposed on. 
 
 They have egress to internet but no ingress except to one public
