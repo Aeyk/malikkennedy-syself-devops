@@ -58,3 +58,7 @@ networkPolicy:
   enabled: true
       
     
+serviceAccount:
+  create: true
+  automountServiceAccountToken: false
+  name: wordpress
