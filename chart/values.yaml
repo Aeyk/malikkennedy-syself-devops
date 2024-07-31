@@ -13,6 +13,11 @@ image:
 #   service:
 #     enabled: true
 
+config:
+  create: true
+  value: ""
+  # --set config.value="$(cat wp-config.php)"
+  
 service: 
   enabled: true
   type: LoadBalancer

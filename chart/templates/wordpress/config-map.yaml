@@ -1,0 +1,10 @@
+{{- if .Values.config.create }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "chart.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels: {{ include "chart.labels" . | nindent 4 }}
+data:
+  wp-config.php: {{ .Values.config.value | b64enc }}
+{{- end }}
