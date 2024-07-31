@@ -28,7 +28,14 @@ persistentVolume:
 deployment:
   enabled: true
   strategy: Recreate
+  replicas: 1
 
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  
 podDistruptionBudget:
   enabled: true
   # maxUnavailable: 1

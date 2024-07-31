@@ -8,6 +8,11 @@ spec:
   selector:
     matchLabels:
       {{- include "chart.selectorLabels" . | nindent 6 }}
+{{- if not .Values.autoscaling.enabled }}
+{{- if .Values.deployment.replicas }}
+  replicas: 1
+{{- end }}
+{{- end }}
 {{- if .Values.deployment.strategy }}
   strategy:
     type: {{ .Values.deployment.strategy }}
