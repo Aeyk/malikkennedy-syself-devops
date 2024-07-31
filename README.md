@@ -4,7 +4,7 @@ placeholder, and is missing a required MySQL compatible database, to
 add it to the NetworkPolicy to allow them to connect, the values
 to specify database information like hostname, replicas, external or
 helm-managed, another config-map for any database configuration, and a
-stateful set to actually run the database if it's helm-managed.
+stateful set to actually run the database if it's helm-managed. You can find this in the chart/ folder. 
 
 # Kubernetes environment
 An internet gateway with NAT connects to following private networks:
