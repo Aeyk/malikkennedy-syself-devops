@@ -1,0 +1,48 @@
+env:
+  database:
+    host: mysql
+    user: wordpress
+    
+image: 
+  tag: 6.2.1-apache
+  name: wordpress
+  pullPolicy: IfNotPresent
+
+# database:
+#   enabled: true
+#   service:
+#     enabled: true
+
+service: 
+  enabled: true
+  type: LoadBalancer
+  port: 80
+  targetPort: 80
+
+persistentVolume:
+  enabled: true
+  size: 20Gi
+  accessModes: 
+    - ReadWriteOnce
+
+deployment:
+  enabled: true
+  strategy: Recreate
+
+podDistruptionBudget:
+  enabled: true
+  # maxUnavailable: 1
+  minAvailable: 1
+
+ingress:
+  enabled: true
+  host: wordpress.example.com
+  class: nginx
+  tls:
+    enabled: true
+    secret: wordpress-tls
+
+networkPolicy:
+  enabled: true
+      
+    

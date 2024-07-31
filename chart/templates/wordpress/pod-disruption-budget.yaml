@@ -1,0 +1,16 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+  name: {{ .Release.Name }}-{{ .Values.Name}}
+spec:
+  {{- if .Values.podDistruptionBudget.maxUnavailable }}
+  maxUnavailable: {{ .Values.podDistruptionBudget.maxUnavailable }}
+  {{- end }}
+  {{- if .Values.podDistruptionBudget.minAvailable }}
+  minAvailable: {{ .Values.podDistruptionBudget.minAvailable }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "chart.selectorLabels" . | nindent 6 }}

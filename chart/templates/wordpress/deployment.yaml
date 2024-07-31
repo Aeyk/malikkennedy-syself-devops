@@ -1,0 +1,53 @@
+{{- if .Values.deployment.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chart.fullname" . }} 
+  labels: {{ include "chart.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "chart.selectorLabels" . | nindent 6 }}
+{{- if .Values.deployment.strategy }}
+  strategy:
+    type: {{ .Values.deployment.strategy }}
+{{- end }}
+  template:
+    metadata:
+      labels:
+        {{- include "chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+        name: wordpress
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        env:
+{{- if .Values.env.database.enabled }}
+        - name: WORDPRESS_DB_HOST
+          value: {{ .Values.env.database.host }}
+{{- end }}
+{{- if .Values.env.database.password }}
+        - name: WORDPRESS_DB_HOST
+          secretKeyRef:
+            name: {{ .Values.env.database.password.secretName }}
+            key: {{ .Values.env.database.password.secretKey }}
+{{- end }}
+{{- if .Values.env.database.user }}
+        - name: WORDPRESS_DB_USER
+          value: {{ .Values.env.database.user }}
+{{- end }}
+{{- if .Values.service.enabled }} 
+        ports:
+        - containerPort: {{ .Values.service.targetPort }}
+          name: {{ .Values.service.name }}
+{{- end }}
+{{- if .Values.persistentVolume.enabled }}
+        volumeMounts:
+        - name: wordpress-persistent-storage
+          mountPath: /var/www/html
+      volumes:
+      - name: wordpress-persistent-storage
+        persistentVolumeClaim:
+          claimName: {{ include "chart.fullname" . }}
+{{- end }}
+{{- end }}
