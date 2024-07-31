@@ -39,4 +39,4 @@ controller to expose services with a load balancer.
 The virtual machines will have Ubuntu 24.04 and all but the jump box
 will also have k0s version 1.30.3+k0s installed using a configuration
 management tool to install then register nodes with each other and add
-ny necessary annotations or labels.
+any necessary annotations or labels.
